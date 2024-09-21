@@ -1,0 +1,50 @@
+{
+	"info": {
+		"_postman_id": "b359b751-7069-4050-9550-b436290291bc",
+		"name": "CalculatorAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5331748"
+	},
+	"item": [
+		{
+			"name": "First Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response content type is text/plain\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/plain\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response body includes the expected message\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Greetings from Calculator Service!\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{calculator_endpoint}}",
+					"host": [
+						"{{calculator_endpoint}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
