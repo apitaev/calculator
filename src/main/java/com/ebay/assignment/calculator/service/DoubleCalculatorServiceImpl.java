@@ -20,7 +20,7 @@ public class DoubleCalculatorServiceImpl implements CalculatorService<Double> {
     public Double calculateChain(Double initialValue, List<Operation> operations, List<Double> numbers) throws UnsupportedOperationException {
         Double result = initialValue;
         // check size of
-        for (int i = 0; i < operations.size(); i++ ) {
+        for (int i = 0; i < operations.size(); i++) {
             result = calculate(operations.get(i), result, numbers.get(i));
         }
         return result;
