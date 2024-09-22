@@ -29,10 +29,12 @@ public class CalculatorController {
 
     @GetMapping("/add")
     public Number add(@RequestParam Number firstSummand, @RequestParam Number secondSummand, @RequestParam String argumentsType) {
-        if (ArgumentsType.DOUBLE.name().equals(argumentsType))
+        if (ArgumentsType.DOUBLE.name().equals(argumentsType)) {
             return doubleCalculatorServiceImpl.calculate(Operation.ADD, firstSummand.doubleValue(), secondSummand.doubleValue());
-        if (ArgumentsType.INTEGER.name().equals(argumentsType))
+        }
+        if (ArgumentsType.INTEGER.name().equals(argumentsType)) {
             return integerCalculatorServiceImpl.calculate(Operation.ADD, firstSummand.intValue(), secondSummand.intValue());
+        }
         //TODO add rest api exception
         return null;
     }
@@ -42,7 +44,7 @@ public class CalculatorController {
         if (ArgumentsType.DOUBLE.name().equals(argumentsType))
             return doubleCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.doubleValue(), subtrahend.doubleValue());
         if (ArgumentsType.INTEGER.name().equals(argumentsType))
-            return integerCalculatorServiceImpl.calculate(Operation.ADD, minuend.intValue(), subtrahend.intValue());
+            return integerCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.intValue(), subtrahend.intValue());
         //TODO add rest api exception
         return null;
     }
@@ -50,9 +52,9 @@ public class CalculatorController {
     @GetMapping("/multiply")
     public Number multiply(@RequestParam Number multiplicand, @RequestParam Number multiplier, @RequestParam String argumentsType) {
         if (ArgumentsType.DOUBLE.name().equals(argumentsType))
-            return doubleCalculatorServiceImpl.calculate(Operation.ADD, multiplicand.doubleValue(), multiplier.doubleValue());
+            return doubleCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.doubleValue(), multiplier.doubleValue());
         if (ArgumentsType.INTEGER.name().equals(argumentsType))
-            return integerCalculatorServiceImpl.calculate(Operation.ADD, multiplicand.intValue(), multiplier.intValue());
+            return integerCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.intValue(), multiplier.intValue());
         //TODO add rest api exception
         return null;
     }
@@ -60,9 +62,9 @@ public class CalculatorController {
     @GetMapping("/divide")
     public Number divide(@RequestParam Number dividend, @RequestParam Number divisor, @RequestParam String argumentsType) {
         if (ArgumentsType.DOUBLE.name().equals(argumentsType))
-            return doubleCalculatorServiceImpl.calculate(Operation.ADD, dividend.doubleValue(), divisor.doubleValue());
+            return doubleCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.doubleValue(), divisor.doubleValue());
         if (ArgumentsType.INTEGER.name().equals(argumentsType))
-            return integerCalculatorServiceImpl.calculate(Operation.ADD, dividend.intValue(), divisor.intValue());
+            return integerCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.intValue(), divisor.intValue());
         //TODO add rest api exception
         return null;
     }
