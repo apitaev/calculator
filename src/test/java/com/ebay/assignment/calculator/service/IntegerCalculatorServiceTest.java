@@ -1,5 +1,6 @@
 package com.ebay.assignment.calculator.service;
 
+import com.ebay.assignment.calculator.exception.CalculatorArithmeticException;
 import com.ebay.assignment.calculator.exception.CalculatorIllegalArgumentException;
 import com.ebay.assignment.calculator.exception.CalculatorNotSupportedOperationException;
 import org.junit.jupiter.api.Assertions;
@@ -72,10 +73,10 @@ public class IntegerCalculatorServiceTest {
 
     @Test
     public void testCalculateWithAddOperationAndIntegerOverflow() {
-        ArithmeticException thrown = Assertions.assertThrows(ArithmeticException.class, () -> {
+        CalculatorArithmeticException thrown = Assertions.assertThrows(CalculatorArithmeticException.class, () -> {
                     integerCalculatorServiceImpl.calculate(Operation.ADD, Integer.MAX_VALUE, 1);
                 },
-                "ArithmeticException was expected");
+                "CalculatorArithmeticException was expected");
         Assertions.assertEquals(Constants.INTEGER_OVERFLOW_EXCEPTION, thrown.getMessage());
     }
 
@@ -92,10 +93,10 @@ public class IntegerCalculatorServiceTest {
 
     @Test
     public void testCalculateWithMultiplyOperationAndIntegerOverflow() {
-        ArithmeticException thrown = Assertions.assertThrows(ArithmeticException.class, () -> {
+        CalculatorArithmeticException thrown = Assertions.assertThrows(CalculatorArithmeticException.class, () -> {
                     integerCalculatorServiceImpl.calculate(Operation.MULTIPLY, Integer.MAX_VALUE, 10);
                 },
-                "ArithmeticException was expected");
+                "CalculatorArithmeticException was expected");
         Assertions.assertEquals(Constants.INTEGER_OVERFLOW_EXCEPTION, thrown.getMessage());
     }
 
@@ -107,10 +108,10 @@ public class IntegerCalculatorServiceTest {
 
     @Test
     public void testCalculateWithDivideOperationAndZeroDivisor() {
-        ArithmeticException thrown = Assertions.assertThrows(ArithmeticException.class, () -> {
+        CalculatorArithmeticException thrown = Assertions.assertThrows(CalculatorArithmeticException.class, () -> {
                     integerCalculatorServiceImpl.calculate(Operation.DIVIDE, 14, 0);
                 },
-                "ArithmeticException was expected");
+                "CalculatorArithmeticException was expected");
         Assertions.assertEquals("/ by zero", thrown.getMessage());
     }
 

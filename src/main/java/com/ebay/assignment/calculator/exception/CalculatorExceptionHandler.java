@@ -20,4 +20,11 @@ public class CalculatorExceptionHandler {
                 HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(calculatorException, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handleCalculatorArithmeticException(CalculatorArithmeticException exception) {
+        CalculatorException calculatorException = new CalculatorException(exception.getMessage(), exception.getCause(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(calculatorException, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
