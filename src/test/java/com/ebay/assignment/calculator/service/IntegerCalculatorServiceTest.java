@@ -1,5 +1,7 @@
 package com.ebay.assignment.calculator.service;
 
+import com.ebay.assignment.calculator.exception.CalculatorIllegalArgumentException;
+import com.ebay.assignment.calculator.exception.CalculatorNotSupportedOperationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,41 +20,48 @@ public class IntegerCalculatorServiceTest {
 
     @Test()
     public void testCalculateWithNullArguments() {
-        IllegalArgumentException thrown = Assertions
-                .assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions
+                .assertThrows(CalculatorIllegalArgumentException.class, () -> {
                     integerCalculatorServiceImpl.calculate(Operation.ADD, null, null);
-                }, "IllegalArgumentException was expected");
+                }, "CalculatorIllegalArgumentException was expected");
 
         Assertions.assertEquals(Constants.OPERANDS_MUST_HAVE_NOT_NULL_VALUES_EXCEPTION, thrown.getMessage());
     }
 
     @Test
     public void testCalculateWithFirstArgumentNull() {
-        IllegalArgumentException thrown = Assertions
-                .assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions
+                .assertThrows(CalculatorIllegalArgumentException.class, () -> {
                     integerCalculatorServiceImpl.calculate(Operation.ADD, null, 5);
-                }, "IllegalArgumentException was expected");
+                }, "CalculatorIllegalArgumentException was expected");
 
         Assertions.assertEquals(Constants.OPERANDS_MUST_HAVE_NOT_NULL_VALUES_EXCEPTION, thrown.getMessage());
     }
 
     @Test
     public void testCalculateWithSecondArgumentNull() {
-        IllegalArgumentException thrown = Assertions
-                .assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions
+                .assertThrows(CalculatorIllegalArgumentException.class, () -> {
                     integerCalculatorServiceImpl.calculate(Operation.ADD, 5, null);
-                }, "IllegalArgumentException was expected");
+                }, "CalculatorIllegalArgumentException was expected");
 
         Assertions.assertEquals(Constants.OPERANDS_MUST_HAVE_NOT_NULL_VALUES_EXCEPTION, thrown.getMessage());
     }
 
     @Test
     public void testCalculateWithOperationTypeNull() {
-        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions.assertThrows(CalculatorIllegalArgumentException.class, () -> {
             integerCalculatorServiceImpl.calculate(null, 1, 2);
-        }, "IllegalArgumentsException was expected");
+        }, "CalculatorIllegalArgumentException was expected");
         Assertions.assertEquals(Constants.OPERATION_CAN_NOT_BE_NULL_EXCEPTION, thrown.getMessage());
+    }
 
+    @Test
+    public void testCalculateWithNotSupportedOperation() {
+        CalculatorNotSupportedOperationException thrown = Assertions.assertThrows(CalculatorNotSupportedOperationException.class, () -> {
+            integerCalculatorServiceImpl.calculate(Operation.NOT_SUPPORTED, 1, 2);
+        }, "CalculatorNotSupportedOperation was expected");
+        Assertions.assertEquals(Constants.OPERATION_NOT_SUPPORTED_EXCEPTION, thrown.getMessage());
     }
 
     @Test
@@ -107,39 +116,39 @@ public class IntegerCalculatorServiceTest {
 
     @Test
     public void testCalculateChainWithNullInitialValue() {
-        IllegalArgumentException thrown = Assertions
-                .assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions
+                .assertThrows(CalculatorIllegalArgumentException.class, () -> {
                     integerCalculatorServiceImpl.calculateChain(null, new ArrayList<Operation>(List.of(Operation.ADD)), new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
-                }, "IllegalArgumentException was expected");
+                }, "CalculatorIllegalArgumentException was expected");
 
         Assertions.assertEquals(Constants.OPERANDS_MUST_HAVE_NOT_NULL_VALUES_EXCEPTION, thrown.getMessage());
     }
 
     @Test
     public void testCalculateChainWithNullOperationList() {
-        IllegalArgumentException thrown = Assertions
-                .assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions
+                .assertThrows(CalculatorIllegalArgumentException.class, () -> {
                     integerCalculatorServiceImpl.calculateChain(5, null, new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
-                }, "IllegalArgumentException was expected");
+                }, "CalculatorIllegalArgumentException was expected");
 
         Assertions.assertEquals(Constants.OPERATION_CAN_NOT_BE_NULL_EXCEPTION, thrown.getMessage());
     }
 
     @Test
     public void testCalculateChainWithNullArgumentsLists() {
-        IllegalArgumentException thrown = Assertions
-                .assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions
+                .assertThrows(CalculatorIllegalArgumentException.class, () -> {
                     integerCalculatorServiceImpl.calculateChain(8, new ArrayList<Operation>(List.of(Operation.ADD)), null);
-                }, "IllegalArgumentException was expected");
+                }, "CalculatorIllegalArgumentException was expected");
         Assertions.assertEquals(Constants.OPERANDS_MUST_HAVE_NOT_NULL_VALUES_EXCEPTION, thrown.getMessage());
     }
 
     @Test
     public void testCalculateChainWithInvalidOperationListSize() {
-        IllegalArgumentException thrown = Assertions
-                .assertThrows(IllegalArgumentException.class, () -> {
+        CalculatorIllegalArgumentException thrown = Assertions
+                .assertThrows(CalculatorIllegalArgumentException.class, () -> {
                     integerCalculatorServiceImpl.calculateChain(8, new ArrayList<Operation>(List.of(Operation.ADD)), new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
-                }, "IllegalArgumentException was expected");
+                }, "CalculatorIllegalArgumentException was expected");
         Assertions.assertEquals(Constants.NUMBER_OF_CHAIN_OPERATIONS_NOT_EQUAL_NUMBER_OF_CHAIN_ARGUMENTS_EXCEPTION, thrown.getMessage());
     }
 

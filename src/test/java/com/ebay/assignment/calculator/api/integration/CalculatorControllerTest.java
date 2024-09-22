@@ -36,6 +36,12 @@ public class CalculatorControllerTest {
     }
 
     @Test
+    public void getAddWithRunTimeException() throws Exception {
+        ResponseEntity<String> response = template.getForEntity("/api/calculator/add?firstSummand=2147483647&secondSummand=1&argumentsType=INTEGER", String.class);
+        assertTrue(response.getStatusCode().is5xxServerError());
+    }
+
+    @Test
     public void getSubtract() throws Exception {
         ResponseEntity<String> response = template.getForEntity("/api/calculator/subtract?minuend=5&subtrahend=1&argumentsType=INTEGER", String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
