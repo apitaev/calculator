@@ -34,40 +34,60 @@ public class CalculatorController {
 
     @GetMapping("/add")
     public Number add(@RequestParam Number firstSummand, @RequestParam Number secondSummand, @RequestParam String argumentsType) {
-        if (ArgumentsType.DOUBLE.name().equals(argumentsType)) {
-            return doubleCalculatorServiceImpl.calculate(Operation.ADD, firstSummand.doubleValue(), secondSummand.doubleValue());
+        try {
+            return switch (ArgumentsType.valueOf(argumentsType)) {
+                case DOUBLE ->
+                        doubleCalculatorServiceImpl.calculate(Operation.ADD, firstSummand.doubleValue(), secondSummand.doubleValue());
+                case INTEGER ->
+                        integerCalculatorServiceImpl.calculate(Operation.ADD, firstSummand.intValue(), secondSummand.intValue());
+            };
+        } catch (IllegalArgumentException e) {
+            throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
         }
-        if (ArgumentsType.INTEGER.name().equals(argumentsType)) {
-            return integerCalculatorServiceImpl.calculate(Operation.ADD, firstSummand.intValue(), secondSummand.intValue());
-        }
-        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
     }
+
 
     @GetMapping("/subtract")
     public Number subtract(@RequestParam Number minuend, @RequestParam Number subtrahend, @RequestParam String argumentsType) {
-        if (ArgumentsType.DOUBLE.name().equals(argumentsType))
-            return doubleCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.doubleValue(), subtrahend.doubleValue());
-        if (ArgumentsType.INTEGER.name().equals(argumentsType))
-            return integerCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.intValue(), subtrahend.intValue());
-        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
+        try {
+            return switch (ArgumentsType.valueOf(argumentsType)) {
+                case DOUBLE ->
+                        doubleCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.doubleValue(), subtrahend.doubleValue());
+                case INTEGER ->
+                        integerCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.intValue(), subtrahend.intValue());
+            };
+        } catch (IllegalArgumentException e) {
+            throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
+        }
     }
 
     @GetMapping("/multiply")
     public Number multiply(@RequestParam Number multiplicand, @RequestParam Number multiplier, @RequestParam String argumentsType) {
-        if (ArgumentsType.DOUBLE.name().equals(argumentsType))
-            return doubleCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.doubleValue(), multiplier.doubleValue());
-        if (ArgumentsType.INTEGER.name().equals(argumentsType))
-            return integerCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.intValue(), multiplier.intValue());
-        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
+
+        try {
+            return switch (ArgumentsType.valueOf(argumentsType)) {
+                case DOUBLE ->
+                        doubleCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.doubleValue(), multiplier.doubleValue());
+                case INTEGER ->
+                        integerCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.intValue(), multiplier.intValue());
+            };
+        } catch (IllegalArgumentException e) {
+            throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
+        }
     }
 
     @GetMapping("/divide")
     public Number divide(@RequestParam Number dividend, @RequestParam Number divisor, @RequestParam String argumentsType) {
-        if (ArgumentsType.DOUBLE.name().equals(argumentsType))
-            return doubleCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.doubleValue(), divisor.doubleValue());
-        if (ArgumentsType.INTEGER.name().equals(argumentsType))
-            return integerCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.intValue(), divisor.intValue());
-        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
+        try {
+            return switch (ArgumentsType.valueOf(argumentsType)) {
+                case DOUBLE ->
+                        doubleCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.doubleValue(), divisor.doubleValue());
+                case INTEGER ->
+                        integerCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.intValue(), divisor.intValue());
+            };
+        } catch (IllegalArgumentException e) {
+            throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
+        }
     }
 
     @GetMapping("/calculateChain")
