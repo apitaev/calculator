@@ -36,9 +36,10 @@ public class CalculatorControllerTest {
     }
 
     @Test
-    public void getAddWithRunTimeException() throws Exception {
+    public void getAddWithStackOverflow() throws Exception {
         ResponseEntity<String> response = template.getForEntity("/api/calculator/add?firstSummand=2147483647&secondSummand=1&argumentsType=INTEGER", String.class);
         assertTrue(response.getStatusCode().is5xxServerError());
+        assertThat(response.getBody()).contains("integer overflow");
     }
 
     @Test
@@ -70,6 +71,13 @@ public class CalculatorControllerTest {
     }
 
     @Test
+    public void getMultiplyWithStackOverflow() throws Exception {
+        ResponseEntity<String> response = template.getForEntity("/api/calculator/multiply?multiplicand=2147483647&multiplier=10&argumentsType=INTEGER", String.class);
+        assertTrue(response.getStatusCode().is5xxServerError());
+        assertThat(response.getBody()).contains("integer overflow");
+    }
+
+    @Test
     public void getDivide() throws Exception {
         ResponseEntity<String> response = template.getForEntity("/api/calculator/divide?dividend=5&divisor=2&argumentsType=INTEGER", String.class);
         assertTrue(response.getStatusCode().is2xxSuccessful());
@@ -81,5 +89,13 @@ public class CalculatorControllerTest {
         ResponseEntity<String> response = template.getForEntity("/api/calculator/divide?dividend=5&divisor=2", String.class);
         assertTrue(response.getStatusCode().is4xxClientError());
         assertThat(response.getBody()).contains("Bad Request");
+    }
+
+    @Test
+    public void getDivideWithByZero() throws Exception {
+        ResponseEntity<String> response = template.getForEntity("/api/calculator/divide?dividend=5&divisor=0&argumentsType=INTEGER", String.class);
+        assertTrue(response.getStatusCode().is5xxServerError());
+        // TODO Division by zero is a bad request
+        assertThat(response.getBody()).contains("/ by zero");
     }
 }
