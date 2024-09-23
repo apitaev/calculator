@@ -15,7 +15,7 @@ integration testing suite using provided local environment file <code>src/test/r
 Calculator project consists of the 5 packages:
 * <code>com.ebay.assignment.calculator</code> containing SpringBoot application.
 * <code>com.ebay.assignment.calculator</code> containing Controller implementation.
-* <code>com.ebay.assignment.calculator.exception<code> storing CalculatorExceptionHandler with ExceptionClasses.
+* <code>com.ebay.assignment.calculator.exception</code> storing CalculatorExceptionHandler with ExceptionClasses.
 * <code>com.ebay.assignment.calculator.service</code> storing CalculatorService with utility classes.
 
 ## Some project considerations
@@ -31,8 +31,9 @@ not supported.
 * Update README.md to include project diagrams.
 * Complete and unit-test implementation for DoubleCalculatorServiceImpl.
 * Complete integration and postman testing for the <code>/calculateChain</code>.
-* Add new Types for CalculatorService interface e.g. FloatCalculatorServiceImpl, Long. Steps to add a new service 
-implementation are:
+* Add new Types for CalculatorService interface e.g. FloatCalculatorServiceImpl, Long.
+
+## Steps to add a new service implementation for a Calculator Service:
   * Add a new class implementing <code>com.ebay.assignment.calculator.service.CalculatorService</code> and implement interface methods;
   * Update enumeration <code>com.ebay.assignment.calculator.service.ArgumentsType</code> by adding a new supported type of arguments.
   * Update a constructor of the <code>com.ebay.assignment.calculator.api.CalculatorController</code> to inject a new implementation.
