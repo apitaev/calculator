@@ -34,7 +34,7 @@ not supported.
 * Add new Types for CalculatorService interface e.g. FloatCalculatorServiceImpl, Long.
 
 ## Steps to add a new service implementation for a Calculator Service:
-  * Add a new class implementing <code>com.ebay.assignment.calculator.service.CalculatorService</code> and implement interface methods;
+  * Add a new class implementing <code>com.ebay.assignment.calculator.service.CalculatorService</code> and implement interface methods.
   * Update enumeration <code>com.ebay.assignment.calculator.service.ArgumentsType</code> by adding a new supported type of arguments.
   * Update a constructor of the <code>com.ebay.assignment.calculator.api.CalculatorController</code> to inject a new implementation.
   * Update api implementations of the <code>com.ebay.assignment.calculator.api.CalculatorController</code> to invoke a new service.
