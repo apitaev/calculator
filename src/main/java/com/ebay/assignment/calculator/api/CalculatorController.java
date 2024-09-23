@@ -1,7 +1,9 @@
 package com.ebay.assignment.calculator.api;
 
+import com.ebay.assignment.calculator.exception.CalculatorIllegalArgumentException;
 import com.ebay.assignment.calculator.service.ArgumentsType;
 import com.ebay.assignment.calculator.service.CalculatorService;
+import com.ebay.assignment.calculator.service.Constants;
 import com.ebay.assignment.calculator.service.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,14 @@ import java.util.List;
 @RequestMapping("/api/calculator")
 public class CalculatorController {
 
-    @Autowired
-    private CalculatorService<Double> doubleCalculatorServiceImpl;
-    @Autowired
-    private CalculatorService<Integer> integerCalculatorServiceImpl;
+    private final CalculatorService<Double> doubleCalculatorServiceImpl;
+    private final CalculatorService<Integer> integerCalculatorServiceImpl;
 
+    @Autowired
+    public CalculatorController(CalculatorService<Integer> integerCalculatorServiceImpl, CalculatorService<Double> doubleCalculatorServiceImpl) {
+        this.integerCalculatorServiceImpl = integerCalculatorServiceImpl;
+        this.doubleCalculatorServiceImpl = doubleCalculatorServiceImpl;
+    }
 
     @GetMapping("/")
     public String hello() {
@@ -35,8 +40,7 @@ public class CalculatorController {
         if (ArgumentsType.INTEGER.name().equals(argumentsType)) {
             return integerCalculatorServiceImpl.calculate(Operation.ADD, firstSummand.intValue(), secondSummand.intValue());
         }
-        //TODO add rest api exception
-        return null;
+        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
     }
 
     @GetMapping("/subtract")
@@ -45,8 +49,7 @@ public class CalculatorController {
             return doubleCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.doubleValue(), subtrahend.doubleValue());
         if (ArgumentsType.INTEGER.name().equals(argumentsType))
             return integerCalculatorServiceImpl.calculate(Operation.SUBTRACT, minuend.intValue(), subtrahend.intValue());
-        //TODO add rest api exception
-        return null;
+        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
     }
 
     @GetMapping("/multiply")
@@ -55,8 +58,7 @@ public class CalculatorController {
             return doubleCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.doubleValue(), multiplier.doubleValue());
         if (ArgumentsType.INTEGER.name().equals(argumentsType))
             return integerCalculatorServiceImpl.calculate(Operation.MULTIPLY, multiplicand.intValue(), multiplier.intValue());
-        //TODO add rest api exception
-        return null;
+        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
     }
 
     @GetMapping("/divide")
@@ -65,8 +67,7 @@ public class CalculatorController {
             return doubleCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.doubleValue(), divisor.doubleValue());
         if (ArgumentsType.INTEGER.name().equals(argumentsType))
             return integerCalculatorServiceImpl.calculate(Operation.DIVIDE, dividend.intValue(), divisor.intValue());
-        //TODO add rest api exception
-        return null;
+        throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
     }
 
     @GetMapping("/calculateChain")

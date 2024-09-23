@@ -12,6 +12,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/***
+ * This class is an example how to write api unit-tests using MVC mock.
+ * The full CalculatorController test collection to be found in the
+ * integration package.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CalculatorControllerTest {
