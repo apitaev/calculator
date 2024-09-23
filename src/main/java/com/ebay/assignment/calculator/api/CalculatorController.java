@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/calculator")
@@ -92,22 +92,17 @@ public class CalculatorController {
 
     @GetMapping("/calculateChain")
     public Number calculateChain(@RequestParam Number initialValue, @RequestParam List<Operation> operationList, @RequestParam List<Number> numbers, @RequestParam String argumentsType) {
-        if (ArgumentsType.DOUBLE.name().equals(argumentsType)) {
-            List<Double> secondArguments = new ArrayList<>();
-            for (Number secondArgument : numbers) {
-                secondArguments.add(secondArgument.doubleValue());
-            }
-            return doubleCalculatorServiceImpl.calculateChain(initialValue.doubleValue(), operationList, secondArguments);
+        try {
+            return switch (ArgumentsType.valueOf(argumentsType)) {
+                case DOUBLE ->
+                        doubleCalculatorServiceImpl.calculateChain(initialValue.doubleValue(), operationList, numbers.stream().map(Number::doubleValue).collect(Collectors.toList()));
+
+                case INTEGER ->
+                        integerCalculatorServiceImpl.calculateChain(initialValue.intValue(), operationList, numbers.stream().map(Number::intValue).collect(Collectors.toList()));
+            };
+        } catch (IllegalArgumentException e) {
+            throw new CalculatorIllegalArgumentException(Constants.ARGUMENTS_TYPE_NOT_SUPPORTED_EXCEPTION);
         }
-        if (ArgumentsType.INTEGER.name().equals(argumentsType)) {
-            List<Integer> secondArguments = new ArrayList<>();
-            for (Number secondArgument : numbers) {
-                secondArguments.add(secondArgument.intValue());
-            }
-            return integerCalculatorServiceImpl.calculateChain(initialValue.intValue(), operationList, secondArguments);
-        }
-        //TODO add rest api exception here
-        return null;
     }
 }
 
